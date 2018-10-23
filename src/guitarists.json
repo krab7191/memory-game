@@ -1,0 +1,62 @@
+[
+    {
+        "url": "dimebag.jpg",
+        "name": "Dimebag Darrell",
+        "id": 1
+    },
+    {
+        "url": "eddie.jpg",
+        "name": "Eddie Van Halen",
+        "id": 2
+    },
+    {
+        "url": "john.jpg",
+        "name": "John Petrucci",
+        "id": 3
+    },
+    {
+        "url": "kirk-small.jpg",
+        "name": "Kirk Hammett",
+        "id": 4
+    },
+    {
+        "url": "mark.jpg",
+        "name": "Mark Morton",
+        "id": 5
+    },
+    {
+        "url": "misha.jpg",
+        "name": "Misha Mansoor",
+        "id": 6
+    },
+    {
+        "url": "paul.jpg",
+        "name": "Paul Gilbert",
+        "id": 7
+    },
+    {
+        "url": "rafael.jpg",
+        "name": "Rafael Salzmann",
+        "id": 8
+    },
+    {
+        "url": "randy.jpg",
+        "name": "Randy Rhoads",
+        "id": 9
+    },
+    {
+        "url": "reece.jpg",
+        "name": "Reece Scruggs",
+        "id": 10
+    },
+    {
+        "url": "tom.jpg",
+        "name": "Tom Morello",
+        "id": 11
+    },
+    {
+        "url": "zach.jpg",
+        "name": "Zach Householder",
+        "id": 12
+    }
+]

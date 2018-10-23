@@ -1,0 +1,21 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+#main-content {
+    margin-top: 80px;
+}
+
+.card {
+    margin: 10px;
+}
+
+.card-image {
+    width: 250px;
+    height: auto;
+}
+
+.card-image:hover {
+    cursor: pointer;
+    background-color: #5F6E77;
+}

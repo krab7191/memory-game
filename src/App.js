@@ -12,11 +12,11 @@ class App extends Component {
       cards: guitarists,
       score: 0,
       topScore: 0,
-      clicked: Array(12).fill(null)
+      clicked: Array(12).fill(false)
     };
   }
 
-  // Fisher-Yates shuffle
+  // Fisher-Yates shuffle on cards, update state
   shuffle = () => {
     let c = this.state.cards;
     for (let i = c.length - 1; i > 0; i--) {
@@ -27,37 +27,99 @@ class App extends Component {
       cards: [...c]
     })
   }
-
-  incScore = () => {
+  // Check the clicked array for an id
+  findId = id => {
+    let yep = this.state.clicked.find(elem => {
+      return elem === id && true;
+    });
+    console.log(`yep: ${yep}`);
+    return yep;
+  }
+  // Return the index of where the first null is found
+  returnFirstNull = () => {
+    let i = this.state.clicked.indexOf(false);
+    console.log(`Index: ${i}`);
+    return i;
+  }
+  // Insert id into clicked array
+  insertId = (id, index) => {
+    console.log(`Insert ${id} at index: ${index}`);
+    let a = this.state.clicked.map((elem, i) => {
+      return i === index ? id : elem;
+    });
+    console.log(a);
+    this.setState({
+      clicked: this.state.clicked.filter((elem, i) =>
+        i === index && id
+      )
+    });
+  }
+  // Clear clicked array
+  emptyClicked = () => {
+    this.setState({
+      clicked: Array(12).fill(null)
+    });
+  }
+  // Reset the score
+  resetScoreZero = () => {
+    this.setState({
+      score: 0
+    });
+  }
+  // If the score is 12, you win!
+  checkWin = () => {
+    if (this.state.score === 12) {
+      return true;
+    }
+    return false;
+  }
+  // Increment both the scores (setState is async...)
+  incrementBothScores = () => {
+    this.setState({
+      score: this.state.score + 1,
+      topScore: this.state.topScore + 1
+    });
+  }
+  // increment just the score
+  incrementScore = () => {
     this.setState({
       score: this.state.score + 1
     });
   }
-
+  // Main game logic here
   handleClick = event => {
-    const { id } = event.target;
-    console.log(id);
-    this.incScore();
-    const newArr = this.state.clicked.map((elem, i) => {
-      return this.gameLogic(elem);
-    })
-    this.setState({
-      clicked: newArr
-    });
-    this.shuffle();
-  }
-
-  gameLogic = item => {
-    this.state.clicked.forEach((elem, i) => {
-      if (elem === item) {
-        // Game over!
-      } else if (elem == null) {
-        // Empty slot
-      } else if (i === this.state.clicked.length -1) {
-        // You win!
+    console.log(this.state);
+    const id = event.target.id;
+    if (this.findId(id)) {
+      // It has already been clicked!
+      alert("You lose");
+      // Reset the counters...
+      this.emptyClicked();
+      this.resetScoreZero();
+    }
+    else {
+      // Not already clicked...
+      // Put the id in the clicked array
+      this.insertId(id, this.returnFirstNull());
+      // Is the top score bigger than the score?
+      if (this.state.topScore > this.state.score) {
+        // Update only the score
+        this.incrementScore();
       }
-      return "Shit";
-    })
+      else {
+        this.incrementBothScores();
+      }
+      // Check for win
+      if (this.checkWin()) {
+        // You win! Reset stuff
+        alert("You win!");
+        this.emptyClicked();
+        this.resetScoreZero();
+      }
+      this.shuffle();
+      // Shuffle the array
+    }
+
   }
 
   render() {
@@ -88,21 +150,21 @@ class App extends Component {
           <div className="row">
             {
               this.state.cards.map((card, i) => (
-                i < 4 && <Row {...card} handleClick={this.handleClick} />
+                i < 4 && <Row {...card} handleClick={this.handleClick} key={i} />
               ))
             }
           </div>
           <div className="row">
             {
               this.state.cards.map((card, i) => (
-                i > 3 && i < 8 && <Row {...card} handleClick={this.handleClick} />
+                i > 3 && i < 8 && <Row {...card} handleClick={this.handleClick} key={i} />
               ))
             }
           </div>
           <div className="row">
             {
               this.state.cards.map((card, i) => (
-                i > 7 && <Row {...card} handleClick={this.handleClick} />
+                i > 7 && <Row {...card} handleClick={this.handleClick} key={i} />
               ))
             }
           </div>

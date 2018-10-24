@@ -18,7 +18,7 @@ const Row = card => (
             id={card.id}
         />
         <CardContent>
-            <Typography gutterBottom variant="h6" component="h3">
+            <Typography variant="h6" component="h3">
                 {card.name}
             </Typography>
         </CardContent>

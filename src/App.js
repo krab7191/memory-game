@@ -29,25 +29,16 @@ class App extends Component {
   }
   // Check the clicked array for an id
   findId = id => {
-    let clicked = this.state.clicked.find(elem => {
+    return this.state.clicked.find(elem => {
       return elem === id && true;
     });
-    console.log(`clicked? ${clicked}`);
-    return clicked;
   }
   // Return the index of where the first null is found
   returnFirstNull = () => {
-    let i = this.state.clicked.indexOf(false);
-    console.log(`Index: ${i}`);
-    return i;
+    return this.state.clicked.indexOf(false);
   }
   // Insert id into clicked array
   insertId = (id, index) => {
-    console.log(`Insert ${id} at index: ${index}`);
-    // let a = this.state.clicked.map((elem, i) => {
-    //   return i === index ? id : elem;
-    // });
-    // console.log(a);
     this.setState({
       clicked: this.state.clicked.map((elem, i) => {
       return i === index ? id : elem;
@@ -57,7 +48,7 @@ class App extends Component {
   // Clear clicked array
   emptyClicked = () => {
     this.setState({
-      clicked: Array(12).fill(null)
+      clicked: Array(12).fill(false)
     });
   }
   // Reset the score
@@ -65,13 +56,6 @@ class App extends Component {
     this.setState({
       score: 0
     });
-  }
-  // If the score is 12, you win!
-  checkWin = () => {
-    if (this.state.score === 12) {
-      return true;
-    }
-    return false;
   }
   // Increment both the scores (setState is async...)
   incrementBothScores = () => {
@@ -112,14 +96,13 @@ class App extends Component {
       // Shuffle the array
       this.shuffle();
       // Check for win
-      if (this.checkWin()) {
+      if (this.returnFirstNull() === 11) {
         // You win! Reset stuff
         alert("You win!");
         this.emptyClicked();
         this.resetScoreZero();
       }
     }
-    console.log(this.state);
   }
 
   render() {
@@ -131,7 +114,7 @@ class App extends Component {
             <div className="container-fluid">
               <div className="navbar-header">
                 <Typography variant="h4" color="primary" className="navbar-brand">
-                  Heavy-Metal Memory Game {this.state.clicked}
+                  Heavy-Metal Memory Game
                 </Typography>
               </div>
 

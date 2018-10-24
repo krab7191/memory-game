@@ -29,11 +29,11 @@ class App extends Component {
   }
   // Check the clicked array for an id
   findId = id => {
-    let yep = this.state.clicked.find(elem => {
+    let clicked = this.state.clicked.find(elem => {
       return elem === id && true;
     });
-    console.log(`yep: ${yep}`);
-    return yep;
+    console.log(`clicked? ${clicked}`);
+    return clicked;
   }
   // Return the index of where the first null is found
   returnFirstNull = () => {
@@ -44,14 +44,14 @@ class App extends Component {
   // Insert id into clicked array
   insertId = (id, index) => {
     console.log(`Insert ${id} at index: ${index}`);
-    let a = this.state.clicked.map((elem, i) => {
-      return i === index ? id : elem;
-    });
-    console.log(a);
+    // let a = this.state.clicked.map((elem, i) => {
+    //   return i === index ? id : elem;
+    // });
+    // console.log(a);
     this.setState({
-      clicked: this.state.clicked.filter((elem, i) =>
-        i === index && id
-      )
+      clicked: this.state.clicked.map((elem, i) => {
+      return i === index ? id : elem;
+    })
     });
   }
   // Clear clicked array
@@ -88,9 +88,8 @@ class App extends Component {
   }
   // Main game logic here
   handleClick = event => {
-    console.log(this.state);
     const id = event.target.id;
-    if (this.findId(id)) {
+    if (this.findId(id) !== undefined) {
       // It has already been clicked!
       alert("You lose");
       // Reset the counters...
@@ -107,8 +106,11 @@ class App extends Component {
         this.incrementScore();
       }
       else {
+        // Update both because they're the same
         this.incrementBothScores();
       }
+      // Shuffle the array
+      this.shuffle();
       // Check for win
       if (this.checkWin()) {
         // You win! Reset stuff
@@ -116,10 +118,8 @@ class App extends Component {
         this.emptyClicked();
         this.resetScoreZero();
       }
-      this.shuffle();
-      // Shuffle the array
     }
-
+    console.log(this.state);
   }
 
   render() {
